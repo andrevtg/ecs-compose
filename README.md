@@ -32,6 +32,12 @@ Saída do console será como:
 2023-11-03 19:53:18 [    INFO] Bucket ecs-composex-xxxxxxxxxx-us-east-1 successfully created.
 ```
 
+## Configuração de subdomain no Route53
+
+Criar uma hosted zone no Route53 desta conta (onde o ecs-composex tem permissões) usando um subdomain que possa ser delegado para esta conta. A delegação é feita copiando os 4 nameservers da hosted zone e criando um registro NS no domínio pai.
+
+Para este exemplo estamos usando o subdomain `capps.vee.codes`.
+
 ## Arquivos de deployment
 
 * **docker-compose.yaml**: arquivo de deployment comum (descreve serviços, volumes, networks, etc).
@@ -41,3 +47,10 @@ Saída do console será como:
 ## Executando no ECS
 
 ecs-compose-x up -f docker-compose.yaml -f aws-compose-x.yaml -n frontend-app
+
+## Obter IP público
+
+Listar os services:
+
+./list-services.sh
+

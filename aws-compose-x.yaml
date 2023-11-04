@@ -5,6 +5,8 @@ networks:
 
 services:
   frontend:
+    ports:
+      - 80:80/tcp
     networks:
       public:
     x-network:
@@ -20,11 +22,19 @@ x-vpc:
     DisableNat: True        # Although the Public, App and Storage subnets are created, no NAT nor route is created.
     Endpoints: {} # Set to {} to disable creating the default VPC endpoints Compose-X use. We won't be needing them.
 
+x-route53:
+  public-domain:
+    ZoneName: capps.vee.codes
+    Lookup: true
+
 x-cluster:
   Properties:
     CapacityProviders:
       - FARGATE_SPOT
+      - FARGATE
     ClusterName: ecs-clusterx
     DefaultCapacityProviderStrategy:
       - CapacityProvider: FARGATE_SPOT
+        Weight: 2
+      - CapacityProvider: FARGATE
         Weight: 1
