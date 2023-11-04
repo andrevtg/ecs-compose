@@ -6,7 +6,12 @@ networks:
 services:
   frontend:
     ports:
-      - 80:80/tcp
+      - mode: awsvpc
+        protocol: tcp
+        published: 80
+        target: 80
+    # ports:
+    #   - 80:80/tcp
     networks:
       public:
     x-network:
